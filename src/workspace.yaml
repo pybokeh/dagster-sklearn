@@ -1,4 +1,4 @@
 load_from:
   - python_file:
-      relative_path: sklearn_repository.py
+      relative_path: repositories/sklearn_repository.py
       executable_path: /home/pybokeh/envs/dagster_dev/bin/python
