@@ -23,3 +23,10 @@ database such as Postgres or MySQL, instead of sqlite.  If you don't specify a `
 then logs, runs, and event statuses will be saved in-memory, instead of the filesystem storage.
 See [documentatiion](https://docs.dagster.io/deployment/dagster-instance) for information about default
 dagster behavior and how to configure it.
+
+### Development workflow
+In dagster, you define tasks with [solids](src/solids/sklearn_solids.py).  Then you define dependencies between solids in a 
+[pipeline](src/pipelines/sklearn_pipeline.py) definition.  Then you can group one or more pipelines in a 
+[repository](src/repositories/sklearn_repository.py) definition.  With the [workspace.yaml](src/workspace.yaml) file, you can tie a 
+repository to a specific Python executable.  You can schedule execution of your pipeline by creating a [schedule](src/schedules/sklearn_schedule.py) definition which you then refer to it in the [repository](src/repositories/sklearn_repository.py) definition (lines 12 through 14).  These are the most basic abstractions and features of dagster.  There are many more such as 
+sensors for event-based triggering, resources and modes, integration with jupyter notebooks, etc.
