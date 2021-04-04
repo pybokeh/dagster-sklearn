@@ -1,3 +1,60 @@
-sudo docker build -t dagster-sklearn .
+# Since we will be running 2 containers that need to "talk"
+# to each other, we need to create a Docker network
+sudo docker network create dagster-sklearn-network
 
-sudo docker run -d -p 3000:3000 dagster-sklearn
+sudo docker build -t dagster-sklearn -f Dockerfile_dagit .
+
+sudo docker build -t dagster-daemon -f Dockerfile_daemon .
+
+# Run docker container with the following options/specifications:
+#     which will delete itself after shutting down,
+#     will map a host file system to container's file system
+#     will map host port 3000 to container's port 3000
+#     give the container a custom name: dagster-dagit
+#     will use the docker network defined earlier
+#     image name: dagster-sklearn 
+sudo docker run -d \
+    --rm \
+    -v $DAGSTER_HOME:/dagster-sklearn/.dagster \
+    -p 3000:3000 \
+    --name dagster-dagit \
+    --net dagster-sklearn-network \
+    dagster-sklearn 
+
+# Run docker container with the following options/specifications:
+#     which will delete itself after shutting down,
+#     will map a host file system to container's file system
+#     give the container a custom name: dagster-daemon
+#     will use the docker network defined earlier
+#     image name: dagster-daemon
+sudo docker run -d \
+    --rm \
+    -v $DAGSTER_HOME:/dagster-sklearn/.dagster \
+    --name dagster-daemon \
+    --net dagster-sklearn-network \
+    dagster-daemon
+
+
+# Docker tips
+
+# Start a docker container
+docker start <containerid_or_name>
+
+# Stop a docker container
+docker stop <containerid_or_name>
+
+# Generate list of running and not running docker containers
+docker ps -a 
+
+# View last part of the logs
+docker logs <containerid_or_name> | tail
+
+# Stream the logs instead
+docker logs <containerid_or_name> -f
+
+# sh or start bash terminal inside the running docker container
+# so that you can take a peek into folders, generate list
+# of environment variables, etc
+docker exec -it <containerid_or_name> sh
+or 
+docker exec -it <containerid_or_name> /bin/bash
