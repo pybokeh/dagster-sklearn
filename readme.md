@@ -13,9 +13,7 @@ not being able to see see all the code in one place.  I think just seeing a port
 code at a time in the examples make it difficult to follow or causes you to have to scroll up or down to see the rest of the code.
 
 ### Getting Started
-Clone this repo.  Then modify the [workspace.yaml](src/workspace.yaml) file and replace the path
-to the python executable with the path to your python executable for the environment which has dagster
-installed.  There is also a `workspace_docker.yaml` file that you can ignore if you're not using Docker.
+With this repo, you can run the example with Docker or without.  Clone this repo.  Then modify the [workspace.yaml](src/workspace.yaml) file and replace the path to the python executable with the path to your python executable for the environment which has dagster installed.  There is also a `workspace_docker.yaml` file that you can use if using Docker.  Otherwise, you can ignore it.
 
 Then create a `DAGSTER_HOME` environment variable.  A sensible location could be:<br>
 `export DAGSTER_HOME=$HOME/.dagster` for Linux/Mac<br>
