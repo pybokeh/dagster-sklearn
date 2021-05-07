@@ -5,16 +5,12 @@ Create a dagster example that is a little more complex than your typical
 "hello world" examples, but not too complex that would overwhelm
 someone new to workflow management or task orchestration libraries.  Yet,
 it is an example that is practical enough where we are extracting data,
-transforming data, and then providing an end result.  I personally find the 
-examples in the official tutorial a bit overwhelming.  It took me several attempts of 
-re-reading the tutorial to really "get" how dagster works.  Part of the reason is, 
-it isn't readily apparent to me when I see boilerplate code inside dagster's
-various different function decorators, if the boilderplate is mandatory or not or why
-this boilerplate is needed.  It turns out that most of the boilerplate is not needed or 
-is optional.  Also, a lot of the boilerplate is directly proportional to how much metadata
-you want shown on dagit or stored in a database backend.  However, I think in most production 
-use cases, a moderate amount of boilerplate probably can not be avoided.  Recently, they
-have re-vamped the documentation and have added much needed scenario based examples.
+transforming data, and then providing an end result.  I personally found the 
+examples in the official tutorial a bit overwhelming or hard to follow. 
+It was not readily apparent to me how the pieces of the various dagster abstractions
+come together due to not seeing all the example code structured in a cohesive manner or 
+not being able to see see all the code in one place.  I think just seeing a portion of the 
+code at a time in the examples make it difficult to follow or causes you to have to scroll up or down to see the rest of the code.
 
 ### Getting Started
 Clone this repo.  Then modify the [workspace.yaml](src/workspace.yaml) file and replace the path
@@ -40,6 +36,25 @@ In dagster, you define tasks with [solids](src/solids/sklearn_solids.py).  Then 
 repository to a specific Python executable.  You can schedule execution of your pipeline by creating a [schedule](src/schedules/sklearn_schedule.py) definition which you then refer to it in the [repository](src/repositories/sklearn_repository.py) definition (lines 12 through 14).  These are the most basic abstractions and features of dagster.  There are many more such as
 sensors for event-based triggering, resources and modes, integration with jupyter notebooks, etc.
 
+### Code Organization
+For me at least, it makes sense to place solids, pipelines, schedules, and respositories in 
+their own folder for better code organization.  Then we can just import them accordingly.  Then
+place the workspace.yaml at the top level above them where you would call the `dagit` command.
+
+Folder tree:
+
+src<br>
+├── pipelines<br>
+│   └── sklearn_pipeline.py<br>
+├── repositories<br>
+│   └── sklearn_repository.py<br>
+├── schedules<br>
+│   └── sklearn_schedule.py<br>
+├── solids<br>
+│   └── sklearn_solids.py<br>
+├── workspace_docker.yaml<br>
+└── workspace.yaml<br>
+
 ### Next Steps
-- ~~Dockerize the application without Docker Compose - make use of Docker network and docker volume~~
+- ~~Dockerize the application without Docker Compose - make use of Docker network and Docker volume~~
 - Dockerize using Docker Compose
