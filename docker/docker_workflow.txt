@@ -4,7 +4,7 @@
 
 # See this YouTube video for background info on running multiple
 # containers manually vs using Docker compose
-# https://www.youtube.com/watch?v=3c-iBn73dDE
+# https://www.youtube.com/watch?v=3c-iBn73dDE&t=5389s
 
 # Since we will be running 2 containers that need to "talk"
 # to each other, we need to create a Docker network
@@ -19,7 +19,7 @@ sudo docker build -t dagster-daemon -f Dockerfile_daemon .
 # the sqlite databases that dagster will generate
 sudo docker volume create dagster-db
 
-# Run docker container with the following options/specifications:
+# Run docker container in detached mode with the following options/specifications:
 #     which will delete itself after shutting down,
 #     will map a "named" host file system to container's file system
 #     will map host port 3000 to container's port 3000
@@ -34,7 +34,7 @@ sudo docker run -d \
     --net dagster-sklearn-network \
     dagster-sklearn 
 
-# Run docker container with the following options/specifications:
+# Run docker container in detached mode with the following options/specifications:
 #     which will delete itself after shutting down,
 #     will map a "named" host file system to container's file system
 #     give the container a custom name: dagster-daemon
