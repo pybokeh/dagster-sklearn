@@ -43,13 +43,13 @@ Folder tree:
 
 src<br>
 ├── pipelines<br>
-│   └── sklearn_pipeline.py<br>
+│       └── sklearn_pipeline.py<br>
 ├── repositories<br>
-│   └── sklearn_repository.py<br>
+│       └── sklearn_repository.py<br>
 ├── schedules<br>
-│   └── sklearn_schedule.py<br>
+│       └── sklearn_schedule.py<br>
 ├── solids<br>
-│   └── sklearn_solids.py<br>
+│       └── sklearn_solids.py<br>
 ├── workspace_docker.yaml<br>
 └── workspace.yaml<br>
 
