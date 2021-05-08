@@ -55,4 +55,4 @@ src<br>
 
 ### Next Steps
 - ~~Dockerize the application without Docker Compose - make use of Docker network and Docker volume~~
-- Dockerize using Docker Compose
+- ~~Dockerize using Docker Compose~~

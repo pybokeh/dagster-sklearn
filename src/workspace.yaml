@@ -2,9 +2,9 @@ load_from:
   - python_file:
       relative_path: repositories/sklearn_repository.py
       # If not using containers, reference your local Python interpreter:
-      # executable_path: /home/pybokeh/envs/dagster_dev/bin/python
+      executable_path: /home/pybokeh/envs/dagster_dev/bin/python
       # If running dagster instance and dagster-daemon in containers:
-      executable_path: /usr/local/bin/python
+      # executable_path: /usr/local/bin/python
 
       # NOTE: If having trouble finding location of your container's
       # Python interpreter, then do: docker exec -it <containerid_or_name> sh

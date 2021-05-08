@@ -1,3 +1,4 @@
 load_from:
   - python_file:
       relative_path: repositories/sklearn_repository.py
+      executable_path: /usr/local/bin/python
