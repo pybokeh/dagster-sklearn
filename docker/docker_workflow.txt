@@ -47,6 +47,17 @@ sudo docker run -d \
     --net dagster-sklearn-network \
     dagster-daemon
 
+# OPTIONAL if wanting to use Postgres backend
+# Pull official postgres image from Docker Hub
+sudo docker login
+sudo docker pull postgres
+
+# Then run the image to create a container
+sudo docker run -d \
+    --name dagster-postgres \
+    -e POSTGRES_PASSWORD=secret \
+    -p 5432:5432 \
+    postgres
 
 # Running example using Docker Compose
 # Assuming both the dagit and daemon Docker images have been built,
