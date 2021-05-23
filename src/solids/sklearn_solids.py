@@ -57,8 +57,8 @@ def split_into_train_test(context, df: pd.DataFrame):
 
     df_train, df_test = train_test_split(df, train_size=0.75, random_state=42)
 
-    context.log.info(f"Number of rows in train: {df_train.shape[0]}")
     context.log.info(f"Number of columns in train: {df_train.shape[1]}")
+    context.log.info(f"Number of rows in train: {df_train.shape[0]}")
 
     context.log.info(f"Number of rows in test: {df_test.shape[0]}")
     context.log.info(f"Number of columns in test: {df_test.shape[1]}")

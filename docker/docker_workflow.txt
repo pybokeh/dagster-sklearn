@@ -1,10 +1,11 @@
-# This file contains how to run the dagster example the 
+# This file contains how to run the dagster example using Docker the 
 # "manual" way (ie without Docker Compose) and also using
 # Docker Compose
 
-# See this YouTube video for background info on running multiple
-# containers manually vs using Docker compose
-# https://www.youtube.com/watch?v=3c-iBn73dDE&t=5389s
+# Docker learning resources
+Full docker tutorial: https://www.youtube.com/watch?v=3c-iBn73dDE
+Basic docker commands: https://www.youtube.com/watch?v=BZiwpsnLLYQ
+Docker volumes: https://www.youtube.com/watch?v=p2PH_YPCsis
 
 # Since we will be running 2 containers that need to "talk"
 # to each other, we need to create a Docker network
@@ -68,7 +69,16 @@ sudo docker-compose -f dagster-docker-compose.yaml up
 # Shutdown the running instances of dagit and daemon
 sudo docker-compose -f dagster-docker-compose.yaml down
 
-# Docker tips
+# Common Docker commands
+
+# build a docker image from a Docker file
+docker build -t <repository_name>:<tag_name> -f <docker_file_name> <path_to_docker_file_name>
+
+# View list of built images
+docker images
+
+# Remove an image
+docker image rm <containerid_or_name>
 
 # Start a docker container
 docker start <containerid_or_name>
@@ -86,10 +96,10 @@ docker logs <containerid_or_name> | tail
 docker logs <containerid_or_name> -f
 
 # Docker volume
-sudo docker volume create <volume_name>
-sudo docker volume inspect <volumn_name>
-sudo docker volume ls
-sudo docker volumn rm <volume_name>
+docker volume create <volume_name>
+docker volume inspect <volumn_name>
+docker volume ls
+docker volumn rm <volume_name>
 
 # sh or start bash terminal inside the running docker container
 # so that you can take a peek into folders, generate list
