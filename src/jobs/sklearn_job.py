@@ -1,5 +1,5 @@
-from dagster import pipeline
-from solids.sklearn_solids import (
+from dagster import job
+from ops.sklearn_ops import (
     fetch_titanic_dataset,
     feature_selection,
     split_into_train_test,
@@ -13,7 +13,7 @@ from solids.sklearn_solids import (
 )
 
 
-# NOTE: When the same solid is being invoked multiple times, the solid
+# NOTE: When the same op is being invoked multiple times, the op
 # names after the first invocation, will be suffixed (ex. "_2", "_3", etc)
 # The 2nd invocation of get_features_columns will be shown in dagit as
 # "get_features_columns_2" and the 2nd invocation of get_target_column
@@ -24,8 +24,8 @@ from solids.sklearn_solids import (
 # https://docs.dagster.io/concepts/solids-pipelines/pipelines#aliases-and-tags
 
 
-@pipeline
-def sklearn_pipeline():
+@job
+def sklearn_job():
     raw_data = fetch_titanic_dataset()
     final_features = feature_selection(raw_data)
     df_train, df_test = split_into_train_test(final_features)

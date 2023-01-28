@@ -1,5 +1,5 @@
 from dagster import repository
-from pipelines.sklearn_pipeline import sklearn_pipeline
+from jobs.sklearn_job import sklearn_job
 from schedules.sklearn_schedule import every_weekday_9am
 
 # There are 2 forms of return value for the repository definition:
@@ -14,8 +14,8 @@ from schedules.sklearn_schedule import every_weekday_9am
 @repository
 def sklearn_repo():
     return {
-        "pipelines": {
-            "sklearn_pipeline": lambda: sklearn_pipeline 
+        "jobs": {
+            "sklearn_job": lambda: sklearn_job 
         },
         "schedules": {
             "every_weekday_9am": lambda: every_weekday_9am

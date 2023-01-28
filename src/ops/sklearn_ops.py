@@ -1,4 +1,4 @@
-from dagster import solid, Output, OutputDefinition
+from dagster import op, Output, Out
 from pathlib import Path
 from sklearn.impute import SimpleImputer
 from sklearn.metrics import accuracy_score
@@ -17,7 +17,7 @@ import pandas as pd
 data_dir = Path(__file__).resolve().parents[2] / "data"
 
 
-@solid(
+@op(
     description="Retrieves the Titanic data set",
 )
 def fetch_titanic_dataset(context) -> pd.DataFrame:
@@ -31,7 +31,7 @@ def fetch_titanic_dataset(context) -> pd.DataFrame:
     return df
 
 
-@solid(
+@op(
     description="Limits data set to features we want to use",
 )
 def feature_selection(context, df: pd.DataFrame) -> pd.DataFrame:
@@ -46,12 +46,11 @@ def feature_selection(context, df: pd.DataFrame) -> pd.DataFrame:
     return df_final
 
 
-@solid(
+@op(
     description="Split the data set into training (75%) and testing (25%)",
-    output_defs=[
-        OutputDefinition(name="training_set", dagster_type=pd.DataFrame),
-        OutputDefinition(name="testing_set", dagster_type=pd.DataFrame),
-    ],
+    out={"training_set": Out(description="training_set", dagster_type=pd.DataFrame),
+        "testing_set": Out(description="testing_set", dagster_type=pd.DataFrame),
+    },
 )
 def split_into_train_test(context, df: pd.DataFrame):
 
@@ -67,7 +66,7 @@ def split_into_train_test(context, df: pd.DataFrame):
     yield Output(df_test, output_name="testing_set")
 
 
-@solid(description="Define required encoding and return column transformer")
+@op(description="Define required encoding and return column transformer")
 def encode_features(context):
 
     imp_constant = SimpleImputer(strategy="constant", fill_value="missing")
@@ -87,26 +86,26 @@ def encode_features(context):
     return ct
 
 
-@solid(description="Return logistic regression model")
+@op(description="Return logistic regression model")
 def logregression(context):
 
     return LogisticRegression(solver="liblinear", random_state=1)
 
 
-@solid(description="Get features columns from dataframe")
+@op(description="Get features columns from dataframe")
 def get_features_columns(context, df: pd.DataFrame) -> pd.DataFrame:
     cols = ["Parch", "Fare", "Embarked", "Sex", "Name", "Age"]
 
     return df[cols]
 
 
-@solid(description="Get target column from dataframe")
+@op(description="Get target column from dataframe")
 def get_target_column(context, df: pd.DataFrame) -> pd.Series:
 
     return df["Survived"]
 
 
-@solid(description="Fit the model")
+@op(description="Fit the model")
 def fit_model(context, X: pd.DataFrame, y: pd.Series, ct, model):
     pipe = make_pipeline(ct, model)
     pipe.fit(X, y)
@@ -114,7 +113,7 @@ def fit_model(context, X: pd.DataFrame, y: pd.Series, ct, model):
     return pipe
 
 
-@solid(description="Predict on new data")
+@op(description="Predict on new data")
 def predict(context, X_new: pd.DataFrame, pipe):
 
     context.log.info(f"Prediction: \n{pipe.predict(X_new)}")
@@ -122,7 +121,7 @@ def predict(context, X_new: pd.DataFrame, pipe):
     return pipe.predict(X_new)
 
 
-@solid(description="Get accuracy score")
+@op(description="Get accuracy score")
 def get_accuracy_score(context, y_true: pd.Series, y_pred: np.ndarray):
 
     context.log.info(f"Accuracy score: {accuracy_score(y_true, y_pred)}")
